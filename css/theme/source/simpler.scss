@@ -1,7 +1,9 @@
 /**
- * White theme for reveal.js. This is the opposite of the 'black' theme.
+ * A simple theme for reveal.js presentations, similar
+ * to the default theme. The accent color is darkblue.
  *
- * By Hakim El Hattab, http://hakim.se
+ * This theme is Copyright (C) 2012 Owen Versteeg, https://github.com/StereotypicalApps. It is MIT licensed.
+ * reveal.js is Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
  */
 
 
@@ -11,26 +13,24 @@
 // ---------------------------------------------
 
 
+
 // Include theme-specific fonts
 @import url(../../lib/font/source-sans-pro/source-sans-pro.css);
-
+@import url(https://fonts.googleapis.com/css?family=Alegreya);
 
 // Override theme settings (see ../template/settings.scss)
-$backgroundColor: #fff;
-
+$mainFontSize: 36px;
+$mainFont: Helvetica, sans-serif;
 $mainColor: #222;
+$headingFont: Alegreya, 'Source Sans Pro', Helvetica, sans-serif;
 $headingColor: #222;
-
-$mainFontSize: 42px;
-$mainFont: 'Source Sans Pro', Helvetica, sans-serif;
-$headingFont: 'Source Sans Pro', Helvetica, sans-serif;
 $headingTextShadow: none;
 $headingLetterSpacing: normal;
-$headingTextTransform: uppercase;
-$headingFontWeight: 600;
-$linkColor: #2a76dd;
-$linkColorHover: lighten( $linkColor, 15% );
-$selectionBackgroundColor: lighten( $linkColor, 25% );
+$headingTextTransform: none;
+$backgroundColor: #f5f1de;
+$linkColor: #00008B;
+$linkColorHover: lighten( $linkColor, 20% );
+$selectionBackgroundColor: rgba(0, 0, 0, 0.99);
 
 $heading1Size: 2.5em;
 $heading2Size: 1.6em;

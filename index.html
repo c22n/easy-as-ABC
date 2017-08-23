@@ -4,10 +4,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Constructing an action potential model from ABCs</title>
+		<title>123, it's easy as ABC</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/simple.css">
+		<link rel="stylesheet" href="css/theme/beige.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -25,24 +25,125 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h2>Constructing an action potential model:</h2>
-					<h3>easy as ABC?</h3>
+
+					<h2>
+						Constructing an action potential model:
+					</h2>
+					<h2>it's easy as ABC?</h2>
+					<img width="200px" data-src="img/CoRE-Imperial-Logo.png">
+
 					<p>
-						<small>Charles Houston</small>
-					</p>
+						<small>Charles Houston (<a href="mailto:cph211@ic.ac.uk">cph211@ic.ac.uk</a>)</small>
+						</p>
+					<p><small>5 Sep 2017</small></p>
 
 				</section>
+				<section data-background-transition="slide" data-background-video="img/cardiac-model.webm" data-background-size="contain" data-background-video-loop="true" data-background-color="#000000">
+					<!-- <div style="position: fixed; bottom: 0; width: 100%">
+					<p style="color: #fff">
+						<small>
+							source: <a href="http://www.imperial.ac.uk/nhli/research/centres-and-initiatives/electrocardiomaths-programme/">Imperial ElectroCardioMaths Programme</a>
+						</small>
+					</p>
+					</div> -->
+				</section>
+				<section data-background-transition="slide">
+					<h3>Towards a discrete-cell model framework</h3>
+					<aside class="notes">
+						Homogeneous cardiac models by their nature do not model cell-level interactions. Discrete-cell models use idealised geometries and suffer from lack of verification, validation and uncertainty quantification. HL1-6 subclone have slow conduction velocity so can be used to build a morphologically accurate, biophysically-validated discrete-cell framework. First step? Cell model of HL1-6!
+					</aside>
+				</section>
+				<section>
+					<h3>Action potential mathematical models</h3>
 
-				<section data-background="#ffdd00">
-					<h3>Introduction</h3>
+					<aside class="notes">
+						Single cells modelled by system of ordinary differential equations. Parameters in equations determined by fitting to experimental data from patch clamp. Traditional point estimation techniques ignore uncertainties around estimates, leading to discrepancies between models. Approximate Bayesian Computation is a inference approach to obtain posterior distributions for parameters, allowing investigation of uncertainty and identifiability.
+					</aside>
+				</section>
+				<section>
+					<h2>Hypothesis</h2>
+					<blockquote style="text-align: left">
+						The <span class="fragment highlight-red" data-fragment-index="1">ABC approach</span> can be used to construct a <span class="fragment highlight-blue" data-fragment-index="1">validated mathematical model</span> of the action potential of HL1-6 while taking into account <span class="fragment highlight-green" data-fragment-index="1">uncertainties in parameter estimates</span> from insufficient fitting data, biological variability and/or parameter redundancy.
+					</blockquote>
+				</section>
+				<section>
+					<h2 >Aims</h2>
 					<ol>
-						<li>Background</li>
-						<li>Methods</li>
-						<li>Results</li>
-						<li>Discussion</li>
+						<li>Develop an ABC implementation to estimate parameter posterior distributions for individual ion currents.</li>
+						<li>Investigate sources of uncertainty and unidentifiability in parameter estimates.</li>
+						<li>Construct the full action potential model and validate with experimental data.</li>
 					</ol>
 				</section>
+				<section>
+					<h3>Approximate Bayesian Computation</h3>
+					<img style="border:none; box-shadow:none;" class="stretch" data-src="img/abc-smc.svg">
+				</section>
+				<section>
+					<h3>Model Overview</h3>
+					<img class="stretch" style="border: none; box-shadow: none;" data-src="img/houston_model-2.png">
+				</section>
+				<section>
+					<section>
+						<h3>Fast Na+ current</h3>
+						<img class="stretch" data-src="img/fig_ina.svg">
+						<p><small>A = activation, B = inactivation</small></p>
+					</section>
 
+					<section>
+						<h3>Rapid delayed-rectifier K+ current</h3>
+						<img class="stretch" data-src="img/fig_ikr.svg">
+						<p><small>A = activation, B = tail current</small></p>
+
+					</section>
+
+					<section>
+						<h3>T-type Ca2+ current</h3>
+						<img class="stretch" data-src="img/fig_icat.svg">
+						<p><small>A = activation, B = inactivation, C = recovery</small></p>
+
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>Steady-state and temporal variables</h3>
+						<ul><li>ABC could not constrain temporal variables with available patch clamp data.</li></ul>
+						<img class="stretch" data-src="img/consts_ikur.png">
+						<p><small>A = steady-state variables, B = activation temporal variable, C = inactivation temporal variable</small></p>
+					</section>
+					<section>
+						<h3>Identifiability analysis</h3>
+						<ul>
+							<li>Distributions almost unchanged from uniform prior.</li>
+							<li>Suggests practical unidentifiability.</li>
+						</ul>
+						<img class="stretch" data-src="img/cov_ikur.png">
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>Full action potential model</h3>
+						<ul>
+							<li>Each simulation run draws from ABC posterior.</li>
+							<li>Automaticity in 56% of runs (n = 200).</li>
+							<li>Natural firing rate comparable with experiments.</li>
+						</ul>
+						<img class="stretch" data-src="img/fig_APsample.svg">
+					</section>
+					<section>
+						<h3>ABC enables uncertainty quantification</h3>
+						<img class="stretch" data-src="img/AP-uncert.svg">
+						<img style="border: none;" width="60%" data-src="img/results-table.png">
+					</section>
+
+				</section>
+				<section>
+					<h2>Conclusions</h2>
+					<ol>
+						<li>ABC is an effective approach to infer model parameters while accounting for uncertainties.</li>
+						<li>Voltage patch clamp data is not sufficient to completely constrain ion current parameters.</li>
+						<li>The full action potential model reproduces qualitative and quantitative characteristics of the HL1-6 myocyte.</li>
+					</ol>
+				</section>
 			</div>
 		</div>
 
@@ -59,7 +160,112 @@
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
+				],
+				// Display controls in the bottom right corner
+				controls: true,
+
+				// Display a presentation progress bar
+				progress: true,
+
+				// Set default timing of 2 minutes per slide
+				defaultTiming: 120,
+
+				// Display the page number of the current slide
+				slideNumber: false,
+
+				// Push each slide change to the browser history
+				history: false,
+
+				// Enable keyboard shortcuts for navigation
+				keyboard: true,
+
+				// Enable the slide overview mode
+				overview: true,
+
+				// Vertical centering of slides
+				center: true,
+
+				// Enables touch navigation on devices with touch input
+				touch: true,
+
+				// Loop the presentation
+				loop: false,
+
+				// Change the presentation direction to be RTL
+				rtl: false,
+
+				// Randomizes the order of slides each time the presentation loads
+				shuffle: false,
+
+				// Turns fragments on and off globally
+				fragments: true,
+
+				// Flags if the presentation is running in an embedded mode,
+				// i.e. contained within a limited portion of the screen
+				embedded: false,
+
+				// Flags if we should show a help overlay when the questionmark
+				// key is pressed
+				help: true,
+
+				// Flags if speaker notes should be visible to all viewers
+				showNotes: false,
+
+				// Global override for autolaying embedded media (video/audio/iframe)
+				// - null: Media will only autoplay if data-autoplay is present
+				// - true: All media will autoplay, regardless of individual setting
+				// - false: No media will autoplay, regardless of individual setting
+				autoPlayMedia: null,
+
+				// Number of milliseconds between automatically proceeding to the
+				// next slide, disabled when set to 0, this value can be overwritten
+				// by using a data-autoslide attribute on your slides
+				autoSlide: 0,
+
+				// Stop auto-sliding after user input
+				autoSlideStoppable: true,
+
+				// Use this method for navigation when auto-sliding
+				autoSlideMethod: Reveal.navigateNext,
+
+				// Enable slide navigation via mouse wheel
+				mouseWheel: false,
+
+				// Hides the address bar on mobile devices
+				hideAddressBar: true,
+
+				// Opens links in an iframe preview overlay
+				previewLinks: false,
+
+				// Transition style
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Transition speed
+				transitionSpeed: 'default', // default/fast/slow
+
+				// Transition style for full page slide backgrounds
+				backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+				// Number of slides away from the current that are visible
+				viewDistance: 3,
+
+				// Parallax background image
+				parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+				// Parallax background size
+				parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
+
+				// Number of pixels to move the parallax background per slide
+				// - Calculated automatically unless specified
+				// - Set to 0 to disable movement along an axis
+				parallaxBackgroundHorizontal: null,
+				parallaxBackgroundVertical: null,
+
+				// The display mode that will be used to show slides
+				display: 'block',
+
+				// size of presentation
+				width: 1200
 			});
 		</script>
 	</body>
