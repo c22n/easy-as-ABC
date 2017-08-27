@@ -179,24 +179,35 @@ body {
 	opacity: 1;
 	visibility: inherit;
 }
+
+$highlightRedColor: #F65314;
+$highlightBlueColor: #7CBB00;
+$highlightGreenColor: #00A1F1;
+
 	.reveal .slides section .fragment.highlight-red.visible {
-		color: #ff2c2d
+		// color: #ff2c2d
+		color: $highlightRedColor
 	}
 	.reveal .slides section .fragment.highlight-green.visible {
-		color: #17ff2e;
+		// color: #17ff2e;
+		color: $highlightBlueColor
 	}
 	.reveal .slides section .fragment.highlight-blue.visible {
-		color: #1b91ff;
+		// color: #1b91ff;
+		color: $highlightGreenColor
 	}
 
 .reveal .slides section .fragment.highlight-current-red.current-fragment {
-	color: #ff2c2d
+	// color: #ff2c2d
+	color: $highlightRedColor
 }
 .reveal .slides section .fragment.highlight-current-green.current-fragment {
-	color: #17ff2e;
+	// color: #17ff2e;
+	color: $highlightBlueColor
 }
 .reveal .slides section .fragment.highlight-current-blue.current-fragment {
-	color: #1b91ff;
+	// color: #1b91ff;
+	color: $highlightGreenColor
 }
 
 
