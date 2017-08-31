@@ -83,6 +83,9 @@ body {
   margin: 20px 0;
   line-height: 1.3; }
 
+.reveal li {
+  margin: 10px 0; }
+
 /* Ensure certain elements are never larger than the slide itself */
 .reveal img,
 .reveal video,

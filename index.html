@@ -26,16 +26,14 @@
 			<div class="slides">
 				<section data-timing=15>
 
-					<h2>
-						Constructing an action potential model:
-					</h2>
-					<h2>it's easy as ABC?</h2>
+					<h1>
+						Constructing an action potential model: it's easy as ABC?
+					</h1>
 					<br/>
 					<p>
-						<small>
-							Charles Houston (<a href="mailto:cph211@ic.ac.uk">cph211@ic.ac.uk</a>)<br />
-							4 Sep 2017
-						</small>
+						Charles Houston (<a href="mailto:cph211@ic.ac.uk">cph211@ic.ac.uk</a>)<br />
+						MRes Biomedical Research<br /><br />
+						4 Sep 2017
 					</p>
 
 					<aside class="notes">
@@ -54,7 +52,7 @@
 					<aside class="notes">
 						Computational modelling of cardiac systems has become an important tool to generate and test hypotheses that may be difficult or impossible to test in a biological or clinical setting.
 						This video is an example of a simulation of fibrillation in a human atria.
-						A commonality between the majority of modern models is their use of homogenised approaches where the tissue is modelled as a continuous medium, in order to achieve computational tractability in whole organ simulations.
+						A commonality between the majority of modern models is their use of homogenised approaches where the tissue is modelled as a continuous medium.
 						However, by their nature these simulations do not account for cell-level propagation between individual myocytes...
 					</aside>
 				</section>
@@ -70,7 +68,7 @@
 				</section>
 
 				<section data-timing=30 data-background-transition="slide">
-					<h3>Towards a discrete-cell model framework</h3>
+					<h2>Towards a discrete-cell modelling framework</h2>
 					<ul>
 						<li>Discrete-cell simulations account for propagation between individual myocytes...</li>
 						<li>...but difficult to validate with biological experiments.</li>
@@ -80,31 +78,31 @@
 
 					<aside class="notes">
 						Discrete-cell models are an alternative to homogenised models, where cells are modelled as separate, connected regions in the simulation.
-						Recent approaches from the literature use idealised geometries and suffer from lack of verification, validation and uncertainty quantification.
-						HL1-6 subclone are a cell line derived from mouse atrial myocytes and have slow conduction velocity so can be used to build a morphologically accurate, biophysically-validated discrete-cell framework.
-						This is the goal of my PhD work, but before this can be completed we require a mathematical model of the action potential of a single HL1-6 myocyte.
+						A major difficulty with developing these models is validating them with experimental data.
+						In our lab, we have a cell line, HL1-6, which have slow conduction velocity so can be used to develop a morphologically accurate, biophysically-validated discrete-cell framework for future modelling.
+						This is the goal of my PhD work. Before this can be completed we require a mathematical model of the action potential of a single HL1-6 myocyte.
 					</aside>
 				</section>
 
 				<section data=timing=30>
-					<h3>Action potential mathematical models</h3>
-					<ul>
-						<li>Each ion channel represented by ordinary differential equation with parameters controlling temporal/voltage dependence.</li>
-						<li>Parameters chosen by fitting to experimental patch-clamp data.</li>
-						<li>Traditional fitting methods do not account for uncertainty in estimates.</li>
+					<h2>Modelling an action potential</h2>
+					<img style="border:none; background-color:white" class="stretch" data-src="img/equations.svg">
+					<ul>					
+						<li>Fit to experimental patch clamp data using traditional methods which do not account for uncertainty in estimates.</li>
 						<li>Approximate Bayesian Computation (ABC) produces distribution of parameter estimates.</li>
 					</ul>
 
 					<aside class="notes">
-						So what are single-cell models?
-						Essentially, the flow of ions through channels and exchangers in the cellular membrane can be modelled by system of ordinary differential equations.
-						The equations are typically borrowed and adapted from previously published models of similar cell types. 
+						How is action potential modelled in a single cell?
+						The flow of ions through transmembrane channels is described by an equation with 'gating' variables.
+						Underlying these gating variables are systems of ODEs, which are themselves composed of variables describing the steady-state and time constants.
 						Parameters in equations are then determined by fitting to data from patch clamp experiments. 
 						Standard practice is to use point estimation methods to set the parameter values. 
 						Unfortunately, these ignore uncertainties around estimates, which has been shown to lead to discrepancies between models.
 						Approximate Bayesian Computation is an inference approach from machine learning that is used to obtain posterior distributions for parameters, allowing investigation of uncertainty and identifiability.
 					</aside>
 				</section>
+
 				<section data-timing=20>
 					<h2>Hypothesis</h2>
 					<blockquote style="width: 80%; text-align: left">
@@ -117,17 +115,18 @@
 						These constitute the three main aims of the project.
 					</aside>
 				</section>
+
 				<section data-timing=20>
 					<h2 >Aims</h2>
 					<ol>
-						<li>Develop an ABC implementation to estimate parameter posterior distributions for individual ion currents.</li>
-						<li>Investigate sources of uncertainty and unidentifiability in parameter estimates.</li>
-						<li>Construct the full action potential model and validate with experimental data.</li>
+						<li style="color:rgb(243,84,38);font-weight:bold;"><span style="color:black;font-weight:normal;">Develop an ABC implementation to estimate parameter posterior distributions for individual ion currents.</span></li>
+						<li style="color:rgb(117,171,31);font-weight:bold;"><span style="color:black;font-weight:normal">Investigate sources of uncertainty and unidentifiability in parameter estimates.</span></li>
+						<li style="color:rgb(27,163,238);font-weight:bold;"><span style="color:black;font-weight:normal">Construct the full action potential model and validate with experimental data.</span></li>
 					</ol>
 				</section>
 
 				<section data-timing=45>
-					<h3>Approximate Bayesian Computation</h3>
+					<h2>Approximate Bayesian Computation (ABC)</h2>
 					<img style="border:none; box-shadow:none;" class="stretch" data-src="img/abc-smc.svg">
 
 					<aside class="notes">
@@ -143,36 +142,58 @@
 
 				</section>
 
+				<!-- <section data-timing=20>
+					<h3>Model Overview</h3>
+					<p>
+						Simulate by solving 35 ODEs at each time step.
+					</p>
+					<img class="stretch" style="border: none; box-shadow: none;" data-src="img/houston_model-2.png">
+
+					<aside class="notes">
+						So now I will move on to discuss the final aim of the project which was to construct the full action potential model and validate to experimental data.
+						Due to the unidentifiability in the time constants of the currents, ABC was re-run only altering steady-state parameters it could constrain and otherwise retaining values from the original formulations.
+						This diagram shows all the currents and exchangers used in the model, of which 6 were fit successfully through ABC. The other currents are either basic linear ohmic currents or no experimental data exists so formulations were retained from a mouse ventricular model.
+					</aside>
+				</section> -->
+
 				<section>
-					<section data-timing=30>
+					<h2 style="color:rgb(243,84,38); text-align:left">Aim 1:</h2>
+					<!-- <section data-timing=30>
 						<h3>Rapid delayed-rectifier K+ current</h3>
 						<img class="stretch" data-src="img/fig_ikr.svg">
 						<p><small>A = activation, B = tail current</small></p>
 
-						<aside class="notes">
-							Addressing the first aim to develop an ABC implementation to estimate parameter distributions, I developed a tool to use input of experimental data from publications and an ion current formulation from previous models and produce output of parameter posterior distributions.
-							Here are a few examples for different channels identified in HL1-6 myocytes.
-							So here are the results for one of the K+ currents in the model.
-							Lack of data for this channel specific to our subclone meant we used data for the original HL-1 cell line which should be a close approximation but is indeed a significant limitation of the project.
-							We compare the results from ABC, with uncertainties shown by one standard deviation, to the experimental fitting data and the original formulation from a published model also fit to the same data.
-							ABC actually improves the fit to the experimental data and appears to have little uncertainty.
-						</aside>
-					</section>
+
+					</section> -->
 
 					<section data-timing=15>
-						<h3>T-type Ca2+ current</h3>
+						<h2>T-type calcium current</h2>
 						<img class="stretch" data-src="img/fig_icat.svg">
 						<p><small>A = activation, B = inactivation, C = recovery</small></p>
+
 						<aside class="notes">
+								Addressing the first aim to develop an ABC implementation to estimate parameter distributions, I developed a tool to use input of experimental data from publications and an ion current formulation from previous models and produce output of parameter posterior distributions.
+								This graph gives a representative example of output from the process.
+								The three graphs show results from the three standard patch clamp protocols used in this fitting - activation, inactivation and recovery.
+								Green circles are the published experimental data points, the red dashed line is the original parameter settings for the equations from a model that happened to be fit to the same data, and the blue line and shaded area represent the distribution of results from the ABC posterior.
+
+
+								<!-- Here are a few examples for different channels identified in HL1-6 myocytes.
+								So here are the results for one of the K+ currents in the model.
+								Lack of data for this channel specific to our subclone meant we used data for the original HL-1 cell line which should be a close approximation but is indeed a significant limitation of the project.
+								We compare the results from ABC, with uncertainties shown by one standard deviation, to the experimental fitting data and the original formulation from a published model also fit to the same data.
+								ABC actually improves the fit to the experimental data and appears to have little uncertainty. -->
+						</aside>
+						<!-- <aside class="notes">
 							A slightly different result is given by the T-type calcium current where we also include available recovery patch clamp protocol data.
 							In this case, we see again the ABC approach improves the fit on the original formulation,particularly in activation.
 							However, we can also note that the formulation appears to struggle to fit the recovery data, indicated by the widening distribution in this plot. 
 							The original formulation was not fit to this data at all, and this may indicate the reason why.
-						</aside>
+						</aside> -->
 					</section>
 
 					<section data-timing=15>
-						<h3>Fast Na+ current</h3>
+						<h2>Fast Na+ current</h2>
 						<img class="stretch" data-src="img/fig_ina.svg">
 						<p><small>A = activation, B = inactivation</small></p>
 
@@ -188,9 +209,10 @@
 				</section>
 
 				<section>
+					<h2 style="color:rgb(117,171,31); text-align:left">Aim 2:</h2>
 					<section data-timing=60>
-						<h3>Steady-state and time constant variables</h3>
-						<ul><li>ABC could not constrain time constant curves variables with available patch clamp data.</li></ul>
+						<h2>Underlying variables</h2>
+						<ul><li>ABC could not constrain time constant curves with standard protocol patch clamp data.</li></ul>
 						<img class="stretch" data-src="img/consts_ikur.png">
 						<p><small>A = steady-state curves, B = activation time constant curve, C = inactivation time constant curve</small></p>
 
@@ -202,10 +224,8 @@
 						</aside>
 					</section>
 
-
-
 					<section data-timing=30>
-						<h3>Identifiability analysis</h3>
+						<h2>Identifiability analysis</h2>
 						<ul>
 							<li>Distributions almost unchanged from uniform prior.</li>
 							<li>Suggests practical unidentifiability.</li>
@@ -220,28 +240,15 @@
 						It is instructive to mention here that this unidentifiability does not indicate ABC is an inferior fitting process to standard point estimation techniques, but rather its output includes additional information that can highlight these issues that would otherwise be missed. And is ultimately critical if we are to reproduce faithfully biological observations using these computer models.
 				</section>
 
-				<section data-timing=20>
-					<h3>Model Overview</h3>
-					<p>
-						Simulate by solving 35 ODEs at each time step.
-					</p>
-					<img class="stretch" style="border: none; box-shadow: none;" data-src="img/houston_model-2.png">
-
-					<aside class="notes">
-						So now I will move on to discuss the final aim of the project which was to construct the full action potential model and validate to experimental data.
-						Due to the unidentifiability in the time constants of the currents, ABC was re-run only altering steady-state parameters it could constrain and otherwise retaining values from the original formulations.
-						This diagram shows all the currents and exchangers used in the model, of which 6 were fit successfully through ABC. The other currents are either basic linear ohmic currents or no experimental data exists so formulations were retained from a mouse ventricular model.
-					</aside>
-				</section>
+				
 
 
 				<section >
+					<h2 style="color:rgb(27,163,238); text-align:left">Aim 3:</h2>
 					<section data-timing=30>
-						<h3>Full action potential model</h3>
+						<h2>Full action potential model</h2>
 						<ul>
-							<li>Each simulation run draws from ABC posterior.</li>
-							<li>Automaticity in 56% of runs (n = 200).</li>
-							<li>Natural firing rate of 4.9Hz (SD=2.0Hz) comparable with experiments.</li>
+							<li>Automaticity in 56% of runs with mean firing rate 4.9Hz (SD=2.0Hz) is comparable to experiments.</li>
 						</ul>
 						<img class="stretch" data-src="img/fig_APsample.svg">
 
@@ -257,9 +264,9 @@
 
 
 					<section data-timing=30>
-						<h3>ABC enables uncertainty quantification</h3>
+						<h2>Uncertainty quantification</h2>
 						<img class="stretch" data-src="img/AP-uncert.png">
-						<img style="border: none;" width="60%" data-src="img/results-table.png">
+						<img style="border: none;" width="65%" data-src="img/results-table.png">
 
 						<aside class="notes">
 							A significant advantage of ABC is we can propagate the uncerainty in each parameter up to the macro behaviour of the channel.
@@ -275,9 +282,9 @@
 				<section data-timing=30>
 					<h2>Conclusions</h2>
 					<ol>
-						<li>ABC is an effective approach to infer model parameters while accounting for uncertainties.</li>
-						<li>Standard protocol voltage patch clamp data is not sufficient to completely constrain ion current parameters.</li>
-						<li>The full action potential model reproduces qualitative and quantitative characteristics of the HL1-6 myocyte.</li>
+						<li style="color:rgb(243,84,38);font-weight:bold;"><span style="color:black;font-weight:normal;">ABC is an effective approach to infer model parameters while accounting for uncertainties.</span></li>
+						<li style="color:rgb(117,171,31);font-weight:bold;"><span style="color:black;font-weight:normal">Standard protocol voltage patch clamp data is not sufficient to completely constrain time constant parameters.</span></li>
+						<li style="color:rgb(27,163,238);font-weight:bold;"><span style="color:black;font-weight:normal">The full action potential model reproduces qualitative and quantitative characteristics of the HL1-6 myocyte.</span></li>
 					</ol>
 					<aside class="notes">
 						So, to finish off this presentation, I believe the hypothesis can be partially accepted.
@@ -298,7 +305,7 @@
 					<br />
 					<img width="250px" data-src="img/CoRE-Imperial-Logo.png">
 
-					<p class="fragment grow"><em>Thank you for listening!</em></p>
+					<!-- <p class="fragment grow"><em>Thank you for listening!</em></p> -->
 				</section>
 			</div>
 		</div>
