@@ -24,7 +24,7 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section data-timing=15>
+				<section data-timing=25>
 
 					<h1>
 						Constructing an action potential model: easy as ABC?
@@ -45,7 +45,7 @@
 
 				</section>
 
-				<section data-timing=15 data-background-transition="slide" data-background-color="#000000">
+				<section data-timing=30 data-background-transition="slide" data-background-color="#000000">
 					<video width=65% loop data-autoplay>
 						<source data-src="img/cardiac-model.mp4" />
 					</video>
@@ -57,7 +57,7 @@
 					</aside>
 				</section>
 				
-				<section data-timing=15 data-background-color="#000000" data-background-transition="slide">
+				<!-- <section data-timing=20 data-background-color="#000000" data-background-transition="slide">
 					<video width=65% loop data-autoplay>
 						<source data-src="img/cdt.mp4" />
 					</video>
@@ -65,15 +65,15 @@
 					<aside class="notes">
 						This is a recording of a reentrant circuit in a monolayer of myocytes showing the feature which may drive the arrhythmia at the macro-scale is affected by microscopic mechanisms.
 					</aside>
-				</section>
+				</section> -->
 
-				<section data-timing=30 data-background-transition="slide">
+				<section data-timing=40 data-background-transition="slide">
 					<h2>Towards a discrete-cell modelling framework</h2>
 					<ul>
 						<li>Discrete-cell simulations account for propagation between individual myocytes...</li>
 						<li>...but difficult to validate with biological experiments.</li>
 						<li>HL1-6 subclone have slow conduction velocity which enables validation through optical mapping.</li>
-						<li>First step to discrete-cell model is to construct a mathematical model of action potential of a single cell.</li>
+						<li>First step to discrete-cell model is to construct a mathematical model of action potential of a single HL1-6 cell.</li>
 					</ul>
 
 					<aside class="notes">
@@ -84,7 +84,7 @@
 					</aside>
 				</section>
 
-				<section data=timing=30>
+				<section data=timing=75>
 					<h2>Modelling an action potential</h2>
 					<img style="border:none; background-color:white" class="stretch" data-src="img/equations.svg">
 					<ul>					
@@ -120,12 +120,12 @@
 					<h2 >Aims</h2>
 					<ol>
 						<li style="color:rgb(243,84,38);font-weight:bold;"><span style="color:black;font-weight:normal;">Develop an ABC implementation to estimate parameter posterior distributions for individual ion currents.</span></li>
-						<li style="color:rgb(117,171,31);font-weight:bold;"><span style="color:black;font-weight:normal">Investigate sources of uncertainty and unidentifiability in parameter estimates.</span></li>
-						<li style="color:rgb(27,163,238);font-weight:bold;"><span style="color:black;font-weight:normal">Construct the full action potential model and validate with experimental data.</span></li>
+						<li style="color:rgb(117,171,31);font-weight:bold;"><span style="color:black;font-weight:normal">Investigate sources of uncertainty and unidentifiability in parameters.</span></li>
+						<li style="color:rgb(27,163,238);font-weight:bold;"><span style="color:black;font-weight:normal">Construct and validate the full action potential model.</span></li>
 					</ol>
 				</section>
 
-				<section data-timing=45>
+				<section data-timing=80>
 					<h2>Approximate Bayesian Computation (ABC)</h2>
 					<img style="border:none; box-shadow:none;" class="stretch" data-src="img/abc-smc.svg">
 
@@ -157,59 +157,51 @@
 				</section> -->
 
 				<section>
-					<h2 style="color:rgb(243,84,38); text-align:left">Aim 1:</h2>
+					<h2 style="color:rgb(243,84,38); text-align:left">Aim 1</h2>
 					<!-- <section data-timing=30>
 						<h3>Rapid delayed-rectifier K+ current</h3>
 						<img class="stretch" data-src="img/fig_ikr.svg">
 						<p><small>A = activation, B = tail current</small></p>
-
-
 					</section> -->
 
-					<section data-timing=15>
-						<h2>T-type calcium current</h2>
+					<section data-timing=70>
+						<h2>Parameterising ion currents</h2>
+
+						<ul>
+							<li>ABC outperformed traditional maximum likelihood estimation, and gives uncertainty in simulation output.  </li>
+						</ul>
 						<img class="stretch" data-src="img/fig_icat.svg">
-						<p><small>A = activation, B = inactivation, C = recovery</small></p>
+						<p><small>Example of ABC fitting in T-type Calcium current: A = activation, B = inactivation, C = recovery</small></p>
 
 						<aside class="notes">
 								Addressing the first aim to develop an ABC implementation to estimate parameter distributions, I developed a tool to use input of experimental data from publications and an ion current formulation from previous models and produce output of parameter posterior distributions.
-								This graph gives a representative example of output from the process.
+								This figure gives a representative example of output from the process for one of the calcium channels.
 								The three graphs show results from the three standard patch clamp protocols used in this fitting - activation, inactivation and recovery.
-								Green circles are the published experimental data points, the red dashed line is the original parameter settings for the equations from a model that happened to be fit to the same data, and the blue line and shaded area represent the distribution of results from the ABC posterior.
-
-
-								<!-- Here are a few examples for different channels identified in HL1-6 myocytes.
-								So here are the results for one of the K+ currents in the model.
-								Lack of data for this channel specific to our subclone meant we used data for the original HL-1 cell line which should be a close approximation but is indeed a significant limitation of the project.
-								We compare the results from ABC, with uncertainties shown by one standard deviation, to the experimental fitting data and the original formulation from a published model also fit to the same data.
-								ABC actually improves the fit to the experimental data and appears to have little uncertainty. -->
+								Green circles are the published experimental data points, the red dashed line is the original parameter settings for the equations from a model that happened to be fit to the same data, and the blue line and shaded area represent the distribution of results from the ABC posterior, with the shaded area showing one standard deviation.
+								Comparing with the original point estimates, we see that ABC actually improves the fit compared to the original parameters.
+								The posterior distribution is relatively narrow in activation and inactivation but wider for the recovery data.
+								This implies that there is higher uncertainty associated with contraining parameters to these data.
 						</aside>
-						<!-- <aside class="notes">
-							A slightly different result is given by the T-type calcium current where we also include available recovery patch clamp protocol data.
-							In this case, we see again the ABC approach improves the fit on the original formulation,particularly in activation.
-							However, we can also note that the formulation appears to struggle to fit the recovery data, indicated by the widening distribution in this plot. 
-							The original formulation was not fit to this data at all, and this may indicate the reason why.
-						</aside> -->
 					</section>
 
-					<section data-timing=15>
+					<!-- <section data-timing=60>
 						<h2>Fast Na+ current</h2>
 						<img class="stretch" data-src="img/fig_ina.svg">
 						<p><small>A = activation, B = inactivation</small></p>
 
 						<aside class="notes">
-							Finally, this is the fast sodium channel which is a critical component in the action potential.
+							This is the fast sodium channel which is a critical component in the action potential.
 							There is small uncertainty in the output of the simulation but it appears to struggle to fit to the threshold voltage of the current, which may indicate a deficiency in the formulation itself to model this reduced current.
 
 							From all of these results, it appears from the small distributions in the output that the parameters in the channel equations have been well contrained.
 							However, these plots are only looking at the simulation output from a specific experiment, rather than the underlying steady-state and time constant variables in the ODEs themselves which manifest to this behaviour.
 						</aside>
 
-					</section>
+					</section> -->
 				</section>
 
 				<section>
-					<h2 style="color:rgb(117,171,31); text-align:left">Aim 2:</h2>
+					<h2 style="color:rgb(117,171,31); text-align:left">Aim 2</h2>
 					<section data-timing=60>
 						<h2>Underlying variables</h2>
 						<ul><li>ABC could not constrain time constant curves with standard protocol patch clamp data.</li></ul>
@@ -224,31 +216,29 @@
 						</aside>
 					</section>
 
-					<section data-timing=30>
+					<!-- <section data-timing=30>
 						<h2>Identifiability analysis</h2>
 						<ul>
 							<li>Distributions almost unchanged from uniform prior.</li>
 							<li>Suggests practical unidentifiability.</li>
 						</ul>
 						<img class="stretch" data-src="img/cov_ikur.png">
-					</section>
-
-					<aside class="notes">
-						This is confirmed by looking at the distributions of these time constant parameters.
-						While we would expect a peak in the histograms, we see that they retain an approximately uniform distribution and there is little to no correlation between the variables.
-						These features all suggest practical unidentifiability, which results from a lack of appropriate fitting data.
-						It is instructive to mention here that this unidentifiability does not indicate ABC is an inferior fitting process to standard point estimation techniques, but rather its output includes additional information that can highlight these issues that would otherwise be missed. And is ultimately critical if we are to reproduce faithfully biological observations using these computer models.
+						<aside class="notes">
+							This is confirmed by looking at the distributions of these time constant parameters.
+							While we would expect a peak in the histograms, we see that they retain an approximately uniform distribution and there is little to no correlation between the variables.
+							These features all suggest practical unidentifiability, which results from a lack of appropriate fitting data.
+							It is instructive to mention here that this unidentifiability does not indicate ABC is an inferior fitting process to standard point estimation techniques, but rather its output includes additional information that can highlight these issues that would otherwise be missed. And is ultimately critical if we are to reproduce faithfully biological observations using these computer models.
+						</aside>
+					</section> -->
 				</section>
 
-				
-
-
 				<section >
-					<h2 style="color:rgb(27,163,238); text-align:left">Aim 3:</h2>
-					<section data-timing=30>
+					<h2 style="color:rgb(27,163,238); text-align:left">Aim 3</h2>
+					<section data-timing=60>
 						<h2>Full action potential model</h2>
 						<ul>
-							<li>Automaticity in 56% of runs with mean firing rate 4.9Hz (SD=2.0Hz) is comparable to experiments.</li>
+							<li>Automaticity in 56% of runs with mean firing rate 4.9Hz (SD=2.0Hz).</li>
+							<li>Comparable qualitative action potential and Calcium transients.</li>
 						</ul>
 						<img class="stretch" data-src="img/fig_APsample.svg">
 
@@ -263,10 +253,10 @@
 
 
 
-					<section data-timing=30>
+					<section data-timing=80>
 						<h2>Uncertainty quantification</h2>
 						<img class="stretch" data-src="img/AP-uncert.png">
-						<img style="border: none;" width="65%" data-src="img/results-table.png">
+						<img style="border: none;" width="63%" data-src="img/results-table.png">
 
 						<aside class="notes">
 							A significant advantage of ABC is we can propagate the uncerainty in each parameter up to the macro behaviour of the channel.
@@ -277,12 +267,12 @@
 							The reduced APD could be due to the fact calcium dynamics were unchanged from the original mouse ventricular cell model, and in that work they also noted a reduced APD compared to experiments.
 						</aside>
 					</section>
-
 				</section>
+
 				<section data-timing=30>
 					<h2>Conclusions</h2>
 					<ol>
-						<li style="color:rgb(243,84,38);font-weight:bold;"><span style="color:black;font-weight:normal;">ABC is an effective approach to infer model parameters while accounting for uncertainties.</span></li>
+						<li style="color:rgb(243,84,38);font-weight:bold;"><span style="color:black;font-weight:normal;">ABC is an effective approach to infer model parameters while accounting for uncertainties and/or unidentifiabilities.</span></li>
 						<li style="color:rgb(117,171,31);font-weight:bold;"><span style="color:black;font-weight:normal">Standard protocol voltage patch clamp data is not sufficient to completely constrain time constant parameters.</span></li>
 						<li style="color:rgb(27,163,238);font-weight:bold;"><span style="color:black;font-weight:normal">The full action potential model reproduces qualitative and quantitative characteristics of the HL1-6 myocyte.</span></li>
 					</ol>
