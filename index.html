@@ -78,8 +78,9 @@
 					<h2>Modelling an action potential</h2>
 					<img style="border:none; background-color:white" class="stretch" data-src="img/equations.svg">
 					<ul>					
-						<li>Fit to experimental patch clamp data using traditional methods which do not account for uncertainty in estimates.</li>
-						<li>Approximate Bayesian Computation (ABC) produces distribution of parameter estimates.</li>
+						<li>Parameters fit to experimental patch clamp data.</li>
+						<li>Traditional fitting methods do not account for uncertainty in estimates.</li>
+						<li>Approximate Bayesian Computation (ABC) produces posterior distribution for each parameter.</li>
 					</ul>
 
 					<aside class="notes">
@@ -98,65 +99,37 @@
 					<h2 >Aims</h2>
 					<ol>
 						<li style="color:rgb(243,84,38);font-weight:bold;"><span style="color:black;font-weight:normal;">Develop an ABC implementation to estimate parameter posterior distributions for individual ion currents.</span></li>
-						<li style="color:rgb(117,171,31);font-weight:bold;"><span style="color:black;font-weight:normal">Investigate sources of uncertainty and unidentifiability in parameters.</span></li>
-						<li style="color:rgb(27,163,238);font-weight:bold;"><span style="color:black;font-weight:normal">Construct and validate the full action potential model.</span></li>
+						<li style="color:rgb(117,171,31);font-weight:bold;"><span style="color:black;font-weight:normal">Investigate the sources of any uncertainty and unidentifiability in parameter estimates.</span></li>
+						<li style="color:rgb(27,163,238);font-weight:bold;"><span style="color:black;font-weight:normal">Construct the full action potential model and validate with action potential recordings from biological experiments.</span></li>
 					</ol>
 					<aside class="notes">
 						Brief description of ABC. Input output.
 					</aside>
 				</section>
 
+				<section data-timing=70>
+					<h2><span style="color:rgb(243,84,38)">Aim 1:</span> Parameterising ion currents using ABC</h2>
+					<ul>
+						<li>ABC outperformed traditional maximum likelihood estimation, and provides uncertainty in simulation output.  </li>
+					</ul>
+					<img class="stretch" data-src="img/fig_icat.svg">
+					<p><small>ABC vs Maximum Likelihood fitting of T-type Calcium current: A = activation, B = inactivation, C = recovery.</small></p>
 
-
-				<section>
-					<h2 style="color:rgb(243,84,38); text-align:left">Aim 1</h2>
-					<!-- <section data-timing=30>
-						<h3>Rapid delayed-rectifier K+ current</h3>
-						<img class="stretch" data-src="img/fig_ikr.svg">
-						<p><small>A = activation, B = tail current</small></p>
-					</section> -->
-
-					<section data-timing=70>
-						<h2>Parameterising ion currents</h2>
-						<ul>
-							<li>ABC outperformed traditional maximum likelihood estimation, and provides uncertainty in simulation output.  </li>
-						</ul>
-						<img class="stretch" data-src="img/fig_icat.svg">
-						<p><small>Example of ABC fitting in T-type Calcium current: A = activation, B = inactivation, C = recovery</small></p>
-
-						<aside class="notes">
-							Three graphs/protocols. Graph description. Improves fit. Distribution narrow. Recovery harder to fit. Appears well constrained but underlying variables.
-						</aside>
-					</section>
-
-					<!-- <section data-timing=60>
-						<h2>Fast Na+ current</h2>
-						<img class="stretch" data-src="img/fig_ina.svg">
-						<p><small>A = activation, B = inactivation</small></p>
-
-						<aside class="notes">
-							This is the fast sodium channel which is a critical component in the action potential.
-							There is small uncertainty in the output of the simulation but it appears to struggle to fit to the threshold voltage of the current, which may indicate a deficiency in the formulation itself to model this reduced current.
-
-							From all of these results, it appears from the small distributions in the output that the parameters in the channel equations have been well contrained.
-							However, these plots are only looking at the simulation output from a specific experiment, rather than the underlying steady-state and time constant variables in the ODEs themselves which manifest to this behaviour.
-						</aside>
-
-					</section> -->
+					<aside class="notes">
+						Three graphs/protocols. Graph description. Improves fit. Distribution narrow. Recovery harder to fit. Appears well constrained but underlying variables.
+					</aside>
 				</section>
 
-				<section>
-					<h2 style="color:rgb(117,171,31); text-align:left">Aim 2</h2>
-					<section data-timing=60>
-						<h2>Underlying variables</h2>
-						<ul><li>ABC could not constrain time constant curves with standard protocol patch clamp data.</li></ul>
-						<img class="stretch" data-src="img/consts_icat2.png">
-						<p><small>A = steady-state curves, B = activation time constant curve, C = inactivation time constant curve</small></p>
+				<section data-timing=60>
+					<h2><span style="color:rgb(117,171,31)">Aim 2:</span> Investigating unidentifiabilities</h2>
+					<ul><li>Time constant curves could not be constrained by standard protocol patch clamp data.</li></ul>
+					<img class="stretch" data-src="img/consts_icat2.png">
+					<p><small>Underlying variables in ion current equations with ABC parameter posteriors: A = steady-state, B = activation time constant, C = inactivation time constant.</small></p>
 
-						<aside class="notes">
-							Plot description. Steady-state well constrained. Time constants wide variation. Practical unidentifiability. Rerun ABC before full model.
-						</aside>
-					</section>
+					<aside class="notes">
+						Plot description. Steady-state well constrained. Time constants wide variation. Practical unidentifiability. Rerun ABC before full model.
+					</aside>
+				</section>
 
 					<!-- <section data-timing=30>
 						<h2>Identifiability analysis</h2>
@@ -172,43 +145,39 @@
 							It is instructive to mention here that this unidentifiability does not indicate ABC is an inferior fitting process to standard point estimation techniques, but rather its output includes additional information that can highlight these issues that would otherwise be missed. And is ultimately critical if we are to reproduce faithfully biological observations using these computer models.
 						</aside>
 					</section> -->
+
+				<section data-timing=60>
+					<h2><span style="color:rgb(27,163,238)">Aim 3:</span> Full action potential model</h2>
+					<ul>
+						<li>Automaticity in 56% of runs with mean firing rate 4.9±2.0 Hz.</li>
+						<li>Comparable qualitative action potential and Calcium transients between simulations and experiments.</li>
+					</ul>
+					<img class="stretch" data-src="img/fig_APsample.svg">
+
+					<aside class="notes">
+						Random draw parameters different output. 200 sims 1 second. Automaticity. Qualitatively similar.
+						<!-- With the posterior distributions of channels, we do not have a single point to choose for each parameter.
+						Therefore in each simulation run we randomly draw from the distributions for each parameter. Interestingly, this results in the full range of full cell activity which can exist within the bounds of the uncertainty.
+						I ran 200 simulations in total, first for 100s of simulation time to obtain a steady-state and then recorded without stimulation for 5 further seconds. Over half of these runs displayed natural automaticity, which is also present in the HL1-6 cell line.
+						The average natural firing rate was quite variable and high at 4.9Hz with a standard deviation of 2Hz meaning that some simulations, such as the one on the right, are unlikely to be physiological.
+						However, general qualitative features for a large portion of the simulations was similar to activity in HL1-6 cells. -->
+					</aside>
 				</section>
 
-				<section >
-					<h2 style="color:rgb(27,163,238); text-align:left">Aim 3</h2>
-					<section data-timing=60>
-						<h2>Full action potential model</h2>
-						<ul>
-							<li>Automaticity in 56% of runs with mean firing rate 4.9Hz (SD=2.0Hz).</li>
-							<li>Comparable qualitative action potential and Calcium transients.</li>
-						</ul>
-						<img class="stretch" data-src="img/fig_APsample.svg">
+				<section data-timing=80>
+					<h2><span style="color:rgb(27,163,238)">Aim 3:</span> Initial validation</h2>
+					<img width="80%" data-src="img/AP-uncert.svg">
+					<img width="80%" data-src="img/results-table.png">
 
-						<aside class="notes">
-							Random draw parameters different output. 200 sims 1 second. Automaticity. Qualitatively similar.
-							<!-- With the posterior distributions of channels, we do not have a single point to choose for each parameter.
-							Therefore in each simulation run we randomly draw from the distributions for each parameter. Interestingly, this results in the full range of full cell activity which can exist within the bounds of the uncertainty.
-							I ran 200 simulations in total, first for 100s of simulation time to obtain a steady-state and then recorded without stimulation for 5 further seconds. Over half of these runs displayed natural automaticity, which is also present in the HL1-6 cell line.
-							The average natural firing rate was quite variable and high at 4.9Hz with a standard deviation of 2Hz meaning that some simulations, such as the one on the right, are unlikely to be physiological.
-							However, general qualitative features for a large portion of the simulations was similar to activity in HL1-6 cells. -->
-						</aside>
-					</section>
-
-					<section data-timing=80>
-						<h2>Uncertainty quantification</h2>
-						<img class="stretch" data-src="img/AP-uncert.png">
-						<img style="border: none;" width="63%" data-src="img/results-table.png">
-
-						<aside class="notes">
-							Advantage propagate uncertainty. Quantitative measurement. Resting potential difference. Sodium channel fitting threshold.
-							<!-- A significant advantage of ABC is we can propagate the uncerainty in each parameter up to the macro behaviour of the channel.
-							These are the results from paced simulations showing the variability between different simulations and the main ion currents in a single paced action potential.
-							The quantitative measurements of action potential duration at 90% repolarisation, resting potential, amplitude and overshoot potential were calculated.
-							In summary, the overshoot potential and amplitude were comparable with biological experiments. However, the computer model had a more polarised resting potential and reduced APD.
-							It is believed that the more polarised resting potential is a result of the inconsistency in the sodium channel fitting, lowering the threshold potential to fire an action potential and thus lowering the voltage at which the model can maintain steady-state.
-							The reduced APD could be due to the fact calcium dynamics were unchanged from the original mouse ventricular cell model, and in that work they also noted a reduced APD compared to experiments. -->
-						</aside>
-					</section>
+					<aside class="notes">
+						Advantage propagate uncertainty. Quantitative measurement. Resting potential difference. Sodium channel fitting threshold.
+						<!-- A significant advantage of ABC is we can propagate the uncerainty in each parameter up to the macro behaviour of the channel.
+						These are the results from paced simulations showing the variability between different simulations and the main ion currents in a single paced action potential.
+						The quantitative measurements of action potential duration at 90% repolarisation, resting potential, amplitude and overshoot potential were calculated.
+						In summary, the overshoot potential and amplitude were comparable with biological experiments. However, the computer model had a more polarised resting potential and reduced APD.
+						It is believed that the more polarised resting potential is a result of the inconsistency in the sodium channel fitting, lowering the threshold potential to fire an action potential and thus lowering the voltage at which the model can maintain steady-state.
+						The reduced APD could be due to the fact calcium dynamics were unchanged from the original mouse ventricular cell model, and in that work they also noted a reduced APD compared to experiments. -->
+					</aside>
 				</section>
 
 				<section data-timing=30>
@@ -249,7 +218,7 @@
 				</section>
 
 				<section data-timing=20>
-					<h3>Model Overview</h3>
+					<h2>Model Overview</h2>
 					<p>
 						Simulate by solving 35 ODEs at each time step.
 					</p>
@@ -376,8 +345,8 @@
 				// The display mode that will be used to show slides
 				display: 'block',
 
-				// size of presentation
-				width: 1200
+				pdfMaxPagesPerSlide: 1,
+
 			});
 		</script>
 	</body>
