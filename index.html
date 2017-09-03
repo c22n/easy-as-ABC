@@ -43,6 +43,7 @@
 				</section>
 
 				<section data-timing=30 data-background-transition="slide" data-background-color="#000000">
+					<h2 style="color:rgba(247,242,211,1)">In-silico modelling of cardiac electrophysiology</h2>
 					<video width=65% loop data-autoplay>
 						<source data-src="img/cardiac-model.mp4" />
 					</video>
@@ -51,17 +52,17 @@
 					</aside>
 				</section>
 				
-				<!-- <section data-timing=20 data-background-color="#000000" data-background-transition="slide">
+				<section data-timing=20 data-background-color="#000000" data-background-transition="slide">
+					<h2 style="color:rgba(247,242,211,1)">Towards a discrete-cell approach</h2>
 					<video width=65% loop data-autoplay>
 						<source data-src="img/cdt.mp4" />
 					</video>
-					
 					<aside class="notes">
-						This is a recording of a reentrant circuit in a monolayer of myocytes showing the feature which may drive the arrhythmia at the macro-scale is affected by microscopic mechanisms.
+							Microscopic propagation can have an effect. Discrete-cell modelling. Separate interconnected regions. Validation difficult. HL1-6. First step.
 					</aside>
-				</section> -->
+				</section>
 
-				<section data-timing=40 data-background-transition="slide">
+				<!-- <section data-timing=40 data-background-transition="slide">
 					<h2>Towards a discrete-cell modelling framework</h2>
 					<ul>
 						<li>Discrete-cell models account for propagation between individual cells...</li>
@@ -70,10 +71,8 @@
 						<li>First step to discrete-cell model is to construct an action potential model of a single HL1-6 cell.</li>
 					</ul>
 
-					<aside class="notes">
-						Separate interconnected regions. Validation difficult. HL1-6. First step.
-					</aside>
-				</section>
+
+				</section> -->
 
 				<section data=timing=75>
 					<h2>Modelling an action potential</h2>
@@ -107,36 +106,7 @@
 					</aside>
 				</section>
 
-				<!-- <section data-timing=80>
-					<h2>Approximate Bayesian Computation (ABC)</h2>
-					<img style="border:none; box-shadow:none;" class="stretch" data-src="img/abc-smc.svg">
 
-					<aside class="notes">
-						Its useful to briefly explain how the ABC method generates its distributions over parameters rather than traditional points estimates to understand the following results.
-						So firstly, we have some experimental data from the specific current we are modelling, and a method to simulate that current using the formulation of ODEs in our computer model.
-						The essential idea is that for each parameter in the equations, we set a range of possible values governed by a simple uniform distribution.
-						We then randomly draw values from that prior and simulate using the model.
-						We only accept simulations that are close to experimental data.
-						This allows us to build up a posterior distribution of the likely values for each parameter.
-						In the specific implementation I use, this posterior is then used as the prior for in multiple iterations of this process for computational tractability.
-						In practice, this posterior distribution is a discrete approximation given by a number of 'particles'.
-					</aside>
-
-				</section> -->
-
-				<!-- <section data-timing=20>
-					<h3>Model Overview</h3>
-					<p>
-						Simulate by solving 35 ODEs at each time step.
-					</p>
-					<img class="stretch" style="border: none; box-shadow: none;" data-src="img/houston_model-2.png">
-
-					<aside class="notes">
-						So now I will move on to discuss the final aim of the project which was to construct the full action potential model and validate to experimental data.
-						Due to the unidentifiability in the time constants of the currents, ABC was re-run only altering steady-state parameters it could constrain and otherwise retaining values from the original formulations.
-						This diagram shows all the currents and exchangers used in the model, of which 6 were fit successfully through ABC. The other currents are either basic linear ohmic currents or no experimental data exists so formulations were retained from a mouse ventricular model.
-					</aside>
-				</section> -->
 
 				<section>
 					<h2 style="color:rgb(243,84,38); text-align:left">Aim 1</h2>
@@ -149,7 +119,7 @@
 					<section data-timing=70>
 						<h2>Parameterising ion currents</h2>
 						<ul>
-							<li>ABC outperformed traditional maximum likelihood estimation, and gives uncertainty in simulation output.  </li>
+							<li>ABC outperformed traditional maximum likelihood estimation, and provides uncertainty in simulation output.  </li>
 						</ul>
 						<img class="stretch" data-src="img/fig_icat.svg">
 						<p><small>Example of ABC fitting in T-type Calcium current: A = activation, B = inactivation, C = recovery</small></p>
@@ -270,6 +240,22 @@
 
 					<!-- <p class="fragment grow"><em>Thank you for listening!</em></p> -->
 				</section>
+
+				<section></section>
+				<section data-timing=80>
+					<h2>Approximate Bayesian Computation (ABC)</h2>
+					<img style="border:none; box-shadow:none;" class="stretch" data-src="img/abc-smc.svg">
+
+				</section>
+
+				<section data-timing=20>
+					<h3>Model Overview</h3>
+					<p>
+						Simulate by solving 35 ODEs at each time step.
+					</p>
+					<img class="stretch" style="border: none; box-shadow: none;" data-src="img/houston_model-2.png">
+				</section>
+
 			</div>
 		</div>
 
