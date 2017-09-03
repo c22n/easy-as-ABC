@@ -146,26 +146,8 @@
 						</aside>
 					</section> -->
 
-				<section data-timing=60>
-					<h2><span style="color:rgb(27,163,238)">Aim 3:</span> Full action potential model</h2>
-					<ul>
-						<li>Automaticity in 56% of runs with mean firing rate 4.9±2.0 Hz.</li>
-						<li>Comparable qualitative action potential and Calcium transients between simulations and experiments.</li>
-					</ul>
-					<img class="stretch" data-src="img/fig_APsample.svg">
-
-					<aside class="notes">
-						Random draw parameters different output. 200 sims 1 second. Automaticity. Qualitatively similar.
-						<!-- With the posterior distributions of channels, we do not have a single point to choose for each parameter.
-						Therefore in each simulation run we randomly draw from the distributions for each parameter. Interestingly, this results in the full range of full cell activity which can exist within the bounds of the uncertainty.
-						I ran 200 simulations in total, first for 100s of simulation time to obtain a steady-state and then recorded without stimulation for 5 further seconds. Over half of these runs displayed natural automaticity, which is also present in the HL1-6 cell line.
-						The average natural firing rate was quite variable and high at 4.9Hz with a standard deviation of 2Hz meaning that some simulations, such as the one on the right, are unlikely to be physiological.
-						However, general qualitative features for a large portion of the simulations was similar to activity in HL1-6 cells. -->
-					</aside>
-				</section>
-
 				<section data-timing=80>
-					<h2><span style="color:rgb(27,163,238)">Aim 3:</span> Initial validation</h2>
+					<h2><span style="color:rgb(27,163,238)">Aim 3:</span> Validating the full cell model</h2>
 					<img width="80%" data-src="img/AP-uncert.svg">
 					<img width="80%" data-src="img/results-table.png">
 
@@ -223,6 +205,24 @@
 						Simulate by solving 35 ODEs at each time step.
 					</p>
 					<img class="stretch" style="border: none; box-shadow: none;" data-src="img/houston_model-2.png">
+				</section>
+
+				<section data-timing=60>
+					<h2><span style="color:rgb(27,163,238)">Aim 3:</span> Simulations without pacing</h2>
+					<ul>
+						<li>Automaticity in 56% of runs with mean firing rate 4.9±2.0 Hz.</li>
+						<li>Comparable qualitative action potential and Calcium transients between simulations and experiments.</li>
+					</ul>
+					<img class="stretch" data-src="img/fig_APsample.svg">
+
+					<aside class="notes">
+						Random draw parameters different output. 200 sims 1 second. Automaticity. Qualitatively similar.
+						<!-- With the posterior distributions of channels, we do not have a single point to choose for each parameter.
+						Therefore in each simulation run we randomly draw from the distributions for each parameter. Interestingly, this results in the full range of full cell activity which can exist within the bounds of the uncertainty.
+						I ran 200 simulations in total, first for 100s of simulation time to obtain a steady-state and then recorded without stimulation for 5 further seconds. Over half of these runs displayed natural automaticity, which is also present in the HL1-6 cell line.
+						The average natural firing rate was quite variable and high at 4.9Hz with a standard deviation of 2Hz meaning that some simulations, such as the one on the right, are unlikely to be physiological.
+						However, general qualitative features for a large portion of the simulations was similar to activity in HL1-6 cells. -->
+					</aside>
 				</section>
 
 			</div>
